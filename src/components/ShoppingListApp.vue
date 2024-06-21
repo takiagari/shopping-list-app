@@ -1,20 +1,47 @@
 <template>
-  <div class="shopping-list-app">
-    <h1>Shopping List App</h1>
-    <!-- 商品名を入力するテキストボックス -->
-    <input v-model="newItem.name" placeholder="買うアイテム名" @keyup.enter="addItem" />
-    <!-- 個数を入力するテキストボックス、デフォルトは1 -->
-    <input v-model.number="newItem.quantity" type="number" class="num" min="1" placeholder="数量" @keyup.enter="addItem" />
-    <!-- 商品を追加するボタン -->
-    <button @click="addItem">Add Item</button>
-    <!-- 商品のリストを表示 -->
-    <ul>
-      <li v-for="(item, index) in items" :key="index">
-        {{ item.name }} ({{ item.quantity }})
-        <!-- 商品を削除するボタン -->
-        <button @click="deleteItem(index)">Delete</button>
-      </li>
-    </ul>
+  <div class="container mt-5 mw-800">
+    <h1 class="text-center mb-4">Shopping List App</h1>
+    <div class="container text-center mb-3">
+      <div class="row">
+        <div class="col-6">
+          <!-- 商品名を入力するテキストボックス -->
+          <input v-model="newItem.name" type="text" class="form-control mb-2" placeholder="買うアイテム名" @keyup.enter="addItem" />
+        </div>
+        <div class="col-2">
+          <!-- 個数を入力するテキストボックス、デフォルトは1 -->
+          <input v-model.number="newItem.quantity" type="number" class="form-control mb-2" min="1" placeholder="数量" @keyup.enter="addItem" />
+        </div>
+        <div class="col">
+          <!-- 商品を追加するボタン -->
+          <button @click="addItem" class="btn btn-primary w-100">Add Item</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <!-- 商品のリストをテーブルで表示 -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">商品名</th>
+            <th scope="col">数量</th>
+            <th scope="col">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in items" :key="index">
+            <th scope="row">{{ index + 1 }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>
+              <button @click="deleteItem(index)" type="button" class="btn btn-secondary btn-sm">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      
   </div>
 </template>
 
@@ -96,18 +123,14 @@ export default {
 };
 </script>
 
-<style>
-.shopping-list-app {
-  text-align: center;
-}
+<style scoped>
 
-input {
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  padding: .2rem;
-}
-.num {
-  width: 3rem;
+body,
+th,
+td,
+input,
+button {
+  font-family: "M PLUS 2", sans-serif;
 }
 
 ul {
@@ -115,11 +138,20 @@ ul {
   padding: 0;
 }
 
-li {
-  margin: 1rem 0;
+h1 {
+  font-weight: 200;
+  color: #555;
 }
 
-button {
-  margin-left: 1rem;
+tr th,
+tr td {
+  color: #666;
 }
+
+tr:hover th,
+tr:hover td {
+  color: #000;
+  background: rgba(235, 247, 237, 0.9);
+}
+
 </style>
